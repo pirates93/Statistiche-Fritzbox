@@ -1,0 +1,226 @@
+type: custom:config-template-card
+variables:
+  - states['sensor.fritz_box_5530_fiber_ip_esterno'].state
+  - states['sensor.fritz_box_5530_fiber_ultimo_riavvio'].state
+  - >-
+    states['sensor.fritz_box_5530_fiber_tempo_di_attivita_della_connessione'].state
+entities:
+  - sensor.fritz_box_5530_fiber_ip_esterno
+  - sensor.fritz_box_5530_fiber_ultimo_riavvio
+  - sensor.fritz_box_5530_fiber_tempo_di_attivita_della_connessione
+  - background: url("/local/grigio.jpg")
+card:
+  type: custom:hui-entities-card
+  show_header_toggle: 'off'
+  entities:
+    - type: section
+      label: ${ 'FRITZ!Box 5530 - IP Est. ' + vars[0] }
+      styles:
+        label:
+          - font-size: 10px
+    - type: custom:hui-vertical-stack-card
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: picture
+              image: /local/fritzbox.png
+            - type: custom:button-card
+              layout: icon_name_state2nd
+              show_icon: true
+              show_state: true
+              styles:
+                grid:
+                  - grid-template-columns: 10px auto
+                icon:
+                  - padding: 0px 10px
+                  - height: 30px
+                  - width: 30px
+                state:
+                  - padding: 20px 0px
+                  - justify-self: left
+                  - font-family: Roboto, sans-serif
+                  - font-size: 18px
+                name:
+                  - padding: 0px 0px
+                  - justify-self: left
+                  - color: var(--secondary-text-color)
+              entity: binary_sensor.fritz_box_5530_fiber_connessione
+              name: Status
+              icon: mdi:clock-outline
+        - type: custom:mini-graph-card
+          entities:
+            - entity: sensor.fritz_box_5530_fiber_velocita_effettiva_di_scaricamento
+              name: Down
+              color: '#3498db'
+              show_graph: true
+            - entity: sensor.fritz_box_5530_fiber_velocita_effettiva_di_caricamento
+              color: red
+              name: Up
+          name: Banda
+          icon: mdi:gauge
+        - type: entities
+          entities:
+            - entity: update.fritz_box_5530_fiber_fritz_os
+              name: Firmware
+              icon: mdi:update
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+            - entity: sensor.fritz_box_5530_fiber_ultimo_riavvio
+              name: Ultimo riavvio
+              icon: mdi:clock-outline
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+            - entity: sensor.fritz_box_5530_fiber_tempo_di_attivita_della_connessione
+              name: Ultimo connessione
+              icon: mdi:clock-outline
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+          style: |
+            ha-card { 
+                --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
+                --ha-card-background: "rgba(0, 0, 0, 0.0)";
+                --paper-item-icon-color: 'var(--text-primary-color)';
+                --ha-card-box-shadow: 'none';
+            }
+        - type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              entity: switch.fritz_box_5530_fiber_wi_fi_pirates_2_5
+              name: WiFi 2.4 Ghz
+              icon: mdi:wifi
+              show_state: true
+              styles:
+                card: null
+                img_cell:
+                  - align-self: start
+                  - text-align: start
+                name:
+                  - justify-self: start
+                  - padding-left: 10px
+                  - font-weight: bold
+                  - text-transform: lowercase
+              state:
+                - value: 'off'
+                  styles:
+                    card:
+                      - filter: opacity(50%)
+                    icon:
+                      - filter: grayscale(100%)
+            - type: custom:button-card
+              entity: switch.fritz_box_5530_fiber_wi_fi_pirates_5_0
+              name: WiFi 5 Ghz
+              icon: mdi:wifi-strength-4
+              show_state: true
+              styles:
+                card: null
+                img_cell:
+                  - align-self: start
+                  - text-align: start
+                name:
+                  - justify-self: start
+                  - padding-left: 10px
+                  - font-weight: bold
+                  - text-transform: lowercase
+              state:
+                - value: 'off'
+                  styles:
+                    card:
+                      - filter: opacity(50%)
+                    icon:
+                      - filter: grayscale(100%)
+            - type: custom:button-card
+              entity: switch.fritz_box_5530_fiber_wi_fi_fritz_box_accesso_ospite
+              name: WiFi Ospiti
+              icon: mdi:account-multiple-plus
+              show_state: true
+              styles:
+                grid:
+                  - grid-template-areas: '"i" "n" "s"'
+                  - grid-template-columns: 1fr
+                  - grid-template-rows: 1fr min-content min-content
+                img_cell:
+                  - align-self: start
+                  - text-align: start
+                name:
+                  - justify-self: start
+                  - padding-left: 10px
+                  - font-weight: bold
+                  - text-transform: lowercase
+                state:
+                  - justify-self: start
+                  - padding-left: 10px
+              state:
+                - value: 'off'
+                  styles:
+                    card:
+                      - filter: opacity(50%)
+                    icon:
+                      - filter: grayscale(100%)
+            - type: custom:button-card
+              entity: image.fritz_box_5530_fiber_fritz_box_accesso_ospite
+              name: WiFi Code
+              icon: mdi:qrcode
+              show_state: false
+              styles:
+                card:
+                  - height: 90px
+                grid:
+                  - grid-template-areas: '"i" "n" "s"'
+                  - grid-template-columns: 1fr
+                  - grid-template-rows: 1fr min-content min-content
+                img_cell:
+                  - align-self: start
+                  - text-align: start
+                name:
+                  - justify-self: start
+                  - padding-left: 10px
+                  - font-weight: bold
+                  - text-transform: lowercase
+                state:
+                  - justify-self: start
+                  - padding-left: 10px
+              state:
+                - value: 'off'
+                  styles:
+                    card:
+                      - filter: opacity(50%)
+                    icon:
+                      - filter: grayscale(100%)
+        - type: horizontal-stack
+          cards:
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.speedtest_ping
+              line_color: blue
+              icon: mdi:speedometer
+              name: Ping
+              line_width: 8
+              font_size: 75
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.fritz_box_5530_fiber_velocita_effettiva_di_scaricamento
+              line_color: '#e74c3c'
+              icon: mdi:speedometer
+              name: Down
+              line_width: 8
+              font_size: 75
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.speedtest_carica
+              icon: mdi:speedometer
+              name: Up
+              line_color: var(--accent-color)
+              line_width: 8
+              font_size: 75
